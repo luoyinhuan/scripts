@@ -273,10 +273,12 @@ getData() {
             CERT_FILE="/etc/v2ray/${DOMAIN}.pem"
             KEY_FILE="/etc/v2ray/${DOMAIN}.key"
         else
-            resolve=`curl -4L https://api64.ipify.org`
-            res=`echo -n ${resolve} | grep ${IP}`
+             local_ip=$(curl -4L https://api64.ipify.org)
+			     echo -e "域名dns解析IP：${domain_ip}"
+               echo -e "本机IP: ${local_ip}"
+            res=`echo -n ${local_ip} | grep ${IP}`
             if [[ -z "${res}" ]]; then
-                colorEcho ${BLUE}  "${DOMAIN} 解析结果：${resolve}"
+                colorEcho ${BLUE}  "${DOMAIN} 解析结果：${local_ip}"
                 colorEcho ${RED}  " 域名未解析到当前服务器IP(${IP})!"
                 exit 1
             fi
