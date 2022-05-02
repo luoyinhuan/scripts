@@ -273,14 +273,10 @@ getData() {
             CERT_FILE="/etc/v2ray/${DOMAIN}.pem"
             KEY_FILE="/etc/v2ray/${DOMAIN}.key"
         else
-	    domain_ip=$(ping "${domain}" -c 1 | sed '1{s/[^(]*(//;s/).*//;q}')
-    echo -e "${OK} ${GreenBG} 正在获取 公网ip 信息，请耐心等待 ${Font}"
-             local_ip=$(curl -4L https://api64.ipify.org)
-			     echo -e "域名dns解析IP：${domain_ip}"
-               echo -e "本机IP: ${local_ip}"
-            res=`echo -n ${local_ip} | grep ${IP}`
+            resolve=`curl -sL http://ip.ws.126.net/ipquery?ip=${DOMAIN}`
+            res=`echo -n ${resolve} | grep ${IP}`
             if [[ -z "${res}" ]]; then
-                colorEcho ${BLUE}  "${DOMAIN} 解析结果：${local_ip}"
+                colorEcho ${BLUE}  "${DOMAIN} 解析结果：${resolve}"
                 colorEcho ${RED}  " 域名未解析到当前服务器IP(${IP})!"
                 exit 1
             fi
