@@ -273,7 +273,7 @@ getData() {
             CERT_FILE="/etc/v2ray/${DOMAIN}.pem"
             KEY_FILE="/etc/v2ray/${DOMAIN}.key"
         else
-            resolve=`curl -sL http://ip.ws.126.net/ipquery?ip=${DOMAIN}`
+            resolve=`curl -sL http://api.tianapi.com/domain/index?key=422f6c97a93cdc02c641215cfb4ab43a&domain=${DOMAIN}`
             res=`echo -n ${resolve} | grep ${IP}`
             if [[ -z "${res}" ]]; then
                 colorEcho ${BLUE}  "${DOMAIN} 解析结果：${resolve}"
